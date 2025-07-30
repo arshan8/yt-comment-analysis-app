@@ -1,4 +1,4 @@
 [core]
     remote = myremote
 ['remote "myremote"']
-    url = C:\Users\ARSHAN\Desktop\temp
+    url = s3://bucket-of-artifacts-p
