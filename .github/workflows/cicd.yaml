@@ -151,6 +151,6 @@ jobs:
             --application-name yt-chrome-plugin \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name yt-chrome-plugin \
-            --s3-location bucket=deployment-bucket-of-arshan ,key=deployment.zip,bundleType=zip \
+            --s3-location bucket=deployment-bucket-of-arshan,key=deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
             --region eu-north-1
