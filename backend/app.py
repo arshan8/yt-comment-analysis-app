@@ -43,6 +43,10 @@ def load_model_and_vectorizer(model_name, model_version, vectorizer_path):
 
 model, vectorizer = load_model_and_vectorizer("yt_chrome_plugin_model", "1", "./tfidf_vectorizer.pkl")
 
+@app.route('/')
+def home():
+    return "Welcome to the flask api"
+
 # === Predict route ===
 @app.route('/predict', methods=['POST'])
 def predict():
