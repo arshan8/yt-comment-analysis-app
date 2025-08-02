@@ -32,20 +32,10 @@ def preprocess_comment(comment):
         return comment
 
 # === Load MLflow model + TF-IDF vectorizer ===
-
-import os
-
-class DummyModel:
-    def predict(self, X):
-        return ['neutral'] * X.shape[0]  # Always returns 'neutral'
-
 def load_model_and_vectorizer(model_name, model_version, vectorizer_path):
-    if os.environ.get("CI"):  # In CI environment
-        print("CI detected — using DummyModel")
-        vectorizer = joblib.load(vectorizer_path)
-        return DummyModel(), vectorizer
-
     mlflow.set_tracking_uri("http://13.60.38.114:5000")
+    print(f"Loading model '{model_name}' version '{model_version}' from MLflow...")
+    
     model_uri = f"models:/{model_name}/{model_version}"
     model = mlflow.pyfunc.load_model(model_uri)
     vectorizer = joblib.load(vectorizer_path)

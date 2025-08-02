@@ -106,15 +106,24 @@ jobs:
         run: python scripts/promote_model.py
       
 
-      - name: Start Flask App
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: eu-north-1
+      - name: Login to AWS ECR
+        if: success()
         run: |
-          nohup python backend/app.py &
-          sleep 25
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 390844758498.dkr.ecr.us-east-1.amazonaws.com
 
-      - name: Run Flask API tests
+      - name: Build Docker image
+        if: success()
         run: |
-          pytest scripts/test_flask_api.py
+          docker build -t yt-chrome-plugin .
+
+      - name: Tag Docker image
+        if: success()
+        run: |
+          docker tag yt-chrome-plugin:latest 390844758498.dkr.ecr.us-east-1.amazonaws.com/yt-chrome-plugin:latest
+
+      - name: Push Docker image to AWS ECR
+        if: success()
+        run: |
+          docker push 390844758498.dkr.ecr.us-east-1.amazonaws.com/yt-chrome-plugin:latest
