@@ -1,18 +1,16 @@
-pec.yml
-+14
-Lines changed: 14 additions & 0 deletions
-Original file line number	Diff line number	Diff line change
-@@ -0,0 +1,14 @@
 version: 0.0
 os: linux
+
 files:
-  - source: /
+  - source: .
     destination: /home/ubuntu/app
+
 hooks:
   BeforeInstall:
     - location: deploy/scripts/install_dependencies.sh
       timeout: 300
       runas: ubuntu
+
   ApplicationStart:
     - location: deploy/scripts/start_docker.sh
       timeout: 300
