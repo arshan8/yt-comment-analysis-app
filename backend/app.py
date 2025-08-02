@@ -45,7 +45,7 @@ model, vectorizer = load_model_and_vectorizer("yt_chrome_plugin_model", "1", "./
 
 @app.route('/')
 def home():
-    return "Welcome to the flask api heyy"
+    return "Welcome to the flask api jheyy"
 
 # === Predict route ===
 @app.route('/predict', methods=['POST'])
