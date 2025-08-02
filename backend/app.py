@@ -14,7 +14,7 @@ CORS(app)  # Enable CORS for all routes
 
 # === Preprocessing function ===
 def preprocess_comment(comment):
-    """Apply preprocessing transformations to a comment."""
+    """Apply preprocessing transformations to a cment."""
     try:
         comment = comment.lower().strip()
         comment = re.sub(r'\n', ' ', comment)
@@ -35,7 +35,7 @@ def preprocess_comment(comment):
 def load_model_and_vectorizer(model_name, model_version, vectorizer_path):
     mlflow.set_tracking_uri("http://13.60.38.114:5000")
     print(f"Loading model '{model_name}' version '{model_version}' from MLflow...")
-    
+
     model_uri = f"models:/{model_name}/{model_version}"
     model = mlflow.pyfunc.load_model(model_uri)
     vectorizer = joblib.load(vectorizer_path)
