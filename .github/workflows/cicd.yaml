@@ -31,7 +31,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: eu-north-1  # Replace with your AWS region
+          AWS_DEFAULT_REGION: eu-north-1  
         run: |
           dvc repro
 
@@ -39,7 +39,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: eu-north-1  # Replace with your AWS region
+          AWS_DEFAULT_REGION: eu-north-1  
         run: |
           dvc push
 
@@ -135,13 +135,12 @@ jobs:
         run: |
           zip -r deployment.zip appspec.yml deploy/scripts/install_dependencies.sh deploy/scripts/start_docker.sh
 
-      # Upload the ZIP file to S3
+
       - name: Upload ZIP to S3
         if: success()
         run: |
           aws s3 cp deployment.zip s3://deployment-bucket-of-arshan/deployment.zip
 
-      # Deploy to AWS CodeDeploy using the uploaded ZIP file
       - name: Deploy to AWS CodeDeploy
         if: success()
         run: |
